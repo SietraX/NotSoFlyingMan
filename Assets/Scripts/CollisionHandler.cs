@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class CollisionHandler : MonoBehaviour
 {
-
     [SerializeField] AudioClip crashAudio;
     [SerializeField] AudioClip successAudio;
 
@@ -13,13 +12,13 @@ public class CollisionHandler : MonoBehaviour
     [SerializeField] ParticleSystem successParticles;
     Rigidbody m_Rigidbody;
     AudioSource m_AudioSource;
-    ParticleSystem m_ParticleSystem;
     bool isTransitioning = false;
 
     void Start()
     {
         m_Rigidbody = GetComponent<Rigidbody>();
         m_AudioSource = GetComponent<AudioSource>();
+
     }
     void OnCollisionEnter(Collision other)
     {
@@ -36,9 +35,7 @@ public class CollisionHandler : MonoBehaviour
                 StartCoroutine(ReloadLevel(0.5f));
                 break;
         }
-
     }
-
     IEnumerator ReloadLevel(float delay)
     {
         m_Rigidbody.constraints = RigidbodyConstraints.FreezeAll;
