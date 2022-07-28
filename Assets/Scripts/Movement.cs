@@ -6,14 +6,15 @@ public class Movement : MonoBehaviour
 {
     // Start is called before the first frame update
 
-    Rigidbody rb;
+    Rigidbody m_RigidBody;
+    AudioSource m_AudioSource;
 
     [SerializeField] float yForce;
     [SerializeField] float turnSpeed;
     void Start()
     {
-
-        rb = GetComponent<Rigidbody>();
+        m_AudioSource = GetComponent<AudioSource>();
+        m_RigidBody = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -27,8 +28,13 @@ public class Movement : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Space))
         {
-            rb.AddRelativeForce(Vector3.up * yForce * Time.deltaTime);
+            m_RigidBody.AddRelativeForce(Vector3.up * yForce * Time.deltaTime);
+            if (!m_AudioSource.isPlaying)
+            {
+                m_AudioSource.Play();
+            }
         }
+        else { m_AudioSource.Stop(); }
     }
 
     void ProcessRotation()
@@ -44,6 +50,8 @@ public class Movement : MonoBehaviour
     }
     void CharacterRotation(float turnSpeed)
     {
+        m_RigidBody.freezeRotation = true;
         transform.Rotate(Vector3.back * turnSpeed * Time.deltaTime);
+        m_RigidBody.freezeRotation = false;
     }
 }
