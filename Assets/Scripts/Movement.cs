@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
-    // Start is called before the first frame update
     [SerializeField] float yForce;
     [SerializeField] float turnSpeed;
     [SerializeField] AudioClip thrustingAudio;
@@ -12,10 +11,8 @@ public class Movement : MonoBehaviour
     [SerializeField] ParticleSystem rightThrustParticles;
     [SerializeField] ParticleSystem leftThrustParticles;
 
-
     Rigidbody m_RigidBody;
     AudioSource m_AudioSource;
-
 
     void Start()
     {
@@ -50,7 +47,6 @@ public class Movement : MonoBehaviour
             m_AudioSource.Stop();
             mainThrustParticles.Stop();
         }
-
     }
 
     void ProcessRotation()
@@ -78,6 +74,7 @@ public class Movement : MonoBehaviour
 
         }
     }
+
     void CharacterRotation(float turnSpeed)
     {
         m_RigidBody.freezeRotation = true;

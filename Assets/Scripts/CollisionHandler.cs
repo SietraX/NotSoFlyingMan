@@ -7,7 +7,6 @@ public class CollisionHandler : MonoBehaviour
 {
     [SerializeField] AudioClip crashAudio;
     [SerializeField] AudioClip successAudio;
-
     [SerializeField] ParticleSystem crashParticles;
     [SerializeField] ParticleSystem successParticles;
     Rigidbody m_Rigidbody;
@@ -23,7 +22,6 @@ public class CollisionHandler : MonoBehaviour
     void OnCollisionEnter(Collision other)
     {
         if (isTransitioning) { return; }
-
         switch (other.gameObject.tag)
         {
             case "Friendly":
@@ -36,6 +34,7 @@ public class CollisionHandler : MonoBehaviour
                 break;
         }
     }
+
     IEnumerator ReloadLevel(float delay)
     {
         m_Rigidbody.constraints = RigidbodyConstraints.FreezeAll;
@@ -47,6 +46,7 @@ public class CollisionHandler : MonoBehaviour
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
         SceneManager.LoadScene(currentSceneIndex);
     }
+
     IEnumerator NextLevel(float delay)
     {
         m_Rigidbody.constraints = RigidbodyConstraints.FreezeAll;
