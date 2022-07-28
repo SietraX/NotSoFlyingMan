@@ -6,8 +6,11 @@ using UnityEngine.SceneManagement;
 public class CollisionHandler : MonoBehaviour
 {
 
+    [SerializeField] AudioClip crashAudio;
+    [SerializeField] AudioClip successAudio;
     Rigidbody m_Rigidbody;
     AudioSource m_AudioSource;
+    bool isTransitioning = false;
 
     void Start()
     {
@@ -16,6 +19,8 @@ public class CollisionHandler : MonoBehaviour
     }
     void OnCollisionEnter(Collision other)
     {
+        if (isTransitioning) { return; }
+
         switch (other.gameObject.tag)
         {
             case "Friendly":
@@ -27,6 +32,7 @@ public class CollisionHandler : MonoBehaviour
                 StartCoroutine(ReloadLevel(0.5f));
                 break;
         }
+
     }
 
     IEnumerator ReloadLevel(float delay)
@@ -34,16 +40,20 @@ public class CollisionHandler : MonoBehaviour
 
         m_Rigidbody.constraints = RigidbodyConstraints.FreezeAll;
         GetComponent<Movement>().enabled = false;
+
         m_AudioSource.Stop();
+        m_AudioSource.PlayOneShot(crashAudio);
         yield return new WaitForSeconds(delay);
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
         SceneManager.LoadScene(currentSceneIndex);
     }
     IEnumerator NextLevel(float delay)
     {
+
         m_Rigidbody.constraints = RigidbodyConstraints.FreezeAll;
         GetComponent<Movement>().enabled = false;
         m_AudioSource.Stop();
+        m_AudioSource.PlayOneShot(successAudio);
         yield return new WaitForSeconds(delay);
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
         if (currentSceneIndex + 1 < SceneManager.sceneCountInBuildSettings)
