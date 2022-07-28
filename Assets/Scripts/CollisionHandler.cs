@@ -6,7 +6,14 @@ using UnityEngine.SceneManagement;
 public class CollisionHandler : MonoBehaviour
 {
 
+    Rigidbody m_Rigidbody;
+    AudioSource m_AudioSource;
 
+    void Start()
+    {
+        m_Rigidbody = GetComponent<Rigidbody>();
+        m_AudioSource = GetComponent<AudioSource>();
+    }
     void OnCollisionEnter(Collision other)
     {
         switch (other.gameObject.tag)
@@ -14,21 +21,30 @@ public class CollisionHandler : MonoBehaviour
             case "Friendly":
                 break;
             case "Finish":
-                NextLevel();
+                StartCoroutine(NextLevel(1));
                 break;
             default:
-                ReloadLevel();
+                StartCoroutine(ReloadLevel(0.5f));
                 break;
         }
     }
 
-    void ReloadLevel()
+    IEnumerator ReloadLevel(float delay)
     {
+
+        m_Rigidbody.constraints = RigidbodyConstraints.FreezeAll;
+        GetComponent<Movement>().enabled = false;
+        m_AudioSource.Stop();
+        yield return new WaitForSeconds(delay);
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
         SceneManager.LoadScene(currentSceneIndex);
     }
-    void NextLevel()
+    IEnumerator NextLevel(float delay)
     {
+        m_Rigidbody.constraints = RigidbodyConstraints.FreezeAll;
+        GetComponent<Movement>().enabled = false;
+        m_AudioSource.Stop();
+        yield return new WaitForSeconds(delay);
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
         if (currentSceneIndex + 1 < SceneManager.sceneCountInBuildSettings)
         {
