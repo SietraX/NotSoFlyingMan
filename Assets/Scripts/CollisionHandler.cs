@@ -12,13 +12,9 @@ public class CollisionHandler : MonoBehaviour
         switch (other.gameObject.tag)
         {
             case "Friendly":
-                Debug.Log("This thing is friendly");
                 break;
             case "Finish":
                 NextLevel();
-                break;
-            case "Fuel":
-                Debug.Log("You picked up fuel");
                 break;
             default:
                 ReloadLevel();
@@ -34,9 +30,8 @@ public class CollisionHandler : MonoBehaviour
     void NextLevel()
     {
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-        if (currentSceneIndex + 1 <= 2)
+        if (currentSceneIndex + 1 < SceneManager.sceneCountInBuildSettings)
         {
-
             SceneManager.LoadScene(currentSceneIndex + 1);
         }
         else
