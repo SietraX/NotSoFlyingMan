@@ -8,8 +8,12 @@ public class CollisionHandler : MonoBehaviour
 
     [SerializeField] AudioClip crashAudio;
     [SerializeField] AudioClip successAudio;
+
+    [SerializeField] ParticleSystem crashParticles;
+    [SerializeField] ParticleSystem successParticles;
     Rigidbody m_Rigidbody;
     AudioSource m_AudioSource;
+    ParticleSystem m_ParticleSystem;
     bool isTransitioning = false;
 
     void Start()
@@ -37,10 +41,9 @@ public class CollisionHandler : MonoBehaviour
 
     IEnumerator ReloadLevel(float delay)
     {
-
         m_Rigidbody.constraints = RigidbodyConstraints.FreezeAll;
         GetComponent<Movement>().enabled = false;
-
+        crashParticles.Play();
         m_AudioSource.Stop();
         m_AudioSource.PlayOneShot(crashAudio);
         yield return new WaitForSeconds(delay);
@@ -49,9 +52,9 @@ public class CollisionHandler : MonoBehaviour
     }
     IEnumerator NextLevel(float delay)
     {
-
         m_Rigidbody.constraints = RigidbodyConstraints.FreezeAll;
         GetComponent<Movement>().enabled = false;
+        successParticles.Play();
         m_AudioSource.Stop();
         m_AudioSource.PlayOneShot(successAudio);
         yield return new WaitForSeconds(delay);
