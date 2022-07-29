@@ -681,6 +681,18 @@ MonoBehaviour:
   successAudio: {fileID: 8300000, guid: 5c4d1aeb939fdb34b805b58033c32871, type: 3}
   crashParticles: {fileID: 532025018}
   successParticles: {fileID: 1498098399}
+--- !u!114 &930970820
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 930970812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4beb1bbe75878645a95d7f558668f5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0

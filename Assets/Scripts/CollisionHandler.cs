@@ -17,7 +17,6 @@ public class CollisionHandler : MonoBehaviour
     {
         m_Rigidbody = GetComponent<Rigidbody>();
         m_AudioSource = GetComponent<AudioSource>();
-
     }
     void OnCollisionEnter(Collision other)
     {
@@ -34,7 +33,7 @@ public class CollisionHandler : MonoBehaviour
                 break;
         }
     }
-    
+
     IEnumerator ReloadLevel(float delay)
     {
         m_Rigidbody.constraints = RigidbodyConstraints.FreezeAll;
