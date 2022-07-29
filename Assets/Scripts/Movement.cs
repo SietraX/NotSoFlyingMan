@@ -10,7 +10,6 @@ public class Movement : MonoBehaviour
     [SerializeField] ParticleSystem mainThrustParticles;
     [SerializeField] ParticleSystem rightThrustParticles;
     [SerializeField] ParticleSystem leftThrustParticles;
-
     Rigidbody m_RigidBody;
     AudioSource m_AudioSource;
 
@@ -20,7 +19,6 @@ public class Movement : MonoBehaviour
         m_RigidBody = GetComponent<Rigidbody>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         ProcessThrust();
@@ -31,21 +29,11 @@ public class Movement : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Space))
         {
-            m_RigidBody.AddRelativeForce(Vector3.up * yForce * Time.deltaTime);
-            if (!m_AudioSource.isPlaying)
-                if (!m_AudioSource.isPlaying)
-                {
-                    m_AudioSource.PlayOneShot(thrustingAudio);
-                }
-            if (!mainThrustParticles.isPlaying)
-            {
-                mainThrustParticles.Play();
-            }
+            StartThrusting();
         }
         else
         {
-            m_AudioSource.Stop();
-            mainThrustParticles.Stop();
+            StopThrusting();
         }
     }
 
@@ -53,26 +41,60 @@ public class Movement : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.A))
         {
-            CharacterRotation(turnSpeed);
-            if (!rightThrustParticles.isPlaying)
-            {
-                rightThrustParticles.Play();
-            }
+            RotateLeft();
         }
         else if (Input.GetKey(KeyCode.D))
         {
-            CharacterRotation(-turnSpeed);
-            if (!leftThrustParticles.isPlaying)
-            {
-                leftThrustParticles.Play();
-            }
+            RotateRight();
         }
         else
         {
-            rightThrustParticles.Stop();
-            leftThrustParticles.Stop();
-
+            StopRotating();
         }
+    }
+
+    private void StartThrusting()
+    {
+        m_RigidBody.AddRelativeForce(Vector3.up * yForce * Time.deltaTime);
+        if (!m_AudioSource.isPlaying)
+            if (!m_AudioSource.isPlaying)
+            {
+                m_AudioSource.PlayOneShot(thrustingAudio);
+            }
+        if (!mainThrustParticles.isPlaying)
+        {
+            mainThrustParticles.Play();
+        }
+    }
+
+    private void StopThrusting()
+    {
+        m_AudioSource.Stop();
+        mainThrustParticles.Stop();
+    }
+
+    private void RotateLeft()
+    {
+        CharacterRotation(turnSpeed);
+        if (!rightThrustParticles.isPlaying)
+        {
+            rightThrustParticles.Play();
+        }
+    }
+
+    private void RotateRight()
+    {
+        CharacterRotation(-turnSpeed);
+        if (!leftThrustParticles.isPlaying)
+        {
+            leftThrustParticles.Play();
+        }
+    }
+
+    private void StopRotating()
+    {
+        rightThrustParticles.Stop();
+        leftThrustParticles.Stop();
     }
 
     void CharacterRotation(float turnSpeed)

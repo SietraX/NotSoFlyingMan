@@ -34,7 +34,7 @@ public class CollisionHandler : MonoBehaviour
                 break;
         }
     }
-
+    
     IEnumerator ReloadLevel(float delay)
     {
         m_Rigidbody.constraints = RigidbodyConstraints.FreezeAll;
